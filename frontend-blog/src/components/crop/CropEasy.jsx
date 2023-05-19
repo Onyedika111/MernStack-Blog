@@ -41,8 +41,8 @@ const CropEasy = ({ photo, setOpenCrop }) => {
     
     const handleCropImage = async () => {
         try {
-            const croppedImage = await getCroppedImg(photo?.url, croppedAreaPixels)
-            const file = new File([getCroppedImg.file], `${photo?.file?.name}`, {
+            const croppedImg = await getCroppedImg(photo?.url, croppedAreaPixels)
+            const file = new File([croppedImg.file], `${photo?.file?.name}`, {
                 type: photo?.file?.type
             })
 

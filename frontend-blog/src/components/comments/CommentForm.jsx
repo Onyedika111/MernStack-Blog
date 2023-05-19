@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const CommentForm = ({ btnLabel, formSubmitHandler, formCancelHandler = null, initialText = ''}) => {
+const CommentForm = ({ btnLabel, formSubmitHandler, formCancelHandler = null, initialText = '', loading = false}) => {
     
     const [value, setValue] = useState(initialText)
     const submitHandler = (e) => {
@@ -22,7 +22,7 @@ const CommentForm = ({ btnLabel, formSubmitHandler, formCancelHandler = null, in
             
                       )
                   }
-              <button type='submit' className='px-6 py-2.5 rounded-lg bg-primary text-white font-semibold' >{btnLabel}</button>
+              <button disabled={loading} type='submit' className='px-6 py-2.5 rounded-lg bg-primary text-white font-semibold disabled:opacity-70 disabled:cursor-not-allowed' >{btnLabel}</button>
               </div>
 
           </div>
