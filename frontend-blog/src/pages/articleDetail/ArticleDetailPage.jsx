@@ -15,48 +15,13 @@ import SuggestedPosts from "./container/SuggestedPosts";
 import CommentsContainer from "../../components/comments/CommentsContainer";
 import SocialShareButtons from "../../components/SocialShareButtons";
 import { useQuery } from "@tanstack/react-query";
-import { getSinglePost } from "../../services/index/posts";
+import { getAllPosts, getSinglePost } from "../../services/index/posts";
 import { stables } from "../../constants";
 import ArticleDetailSkeleton from "./components/ArticleDetailSkeleton";
 import ErrorMessage from "../../components/ErrorMessage";
 import { useSelector } from "react-redux";
 
-const postsData = [
-  {
-    _id: "1",
-    image: Images.Post1Image,
-    title: "Help children get better education",
-    createdAt: "2023-05-9T15:35:53.607+0000",
-  },
-  {
-    _id: "2",
-    image: Images.Post1Image,
-    title: "Help children get better education",
-    createdAt: "2023-05-9T15:35:53.607+0000",
-  },
-  {
-    _id: "3",
-    image: Images.Post1Image,
-    title: "Help children get better education",
-    createdAt: "2023-05-9T15:35:53.607+0000",
-  },
-  {
-    _id: "4",
-    image: Images.Post1Image,
-    title: "Help children get better education",
-    createdAt: "2023-05-9T15:35:53.607+0000",
-  },
-];
 
-const tagsData = [
-  "Medical",
-  "Lifestyle",
-  "Learn",
-  "Healthy",
-  "Food",
-  "Diet",
-  "Education",
-];
 
 const ArticleDetailPage = () => {
   const { slug } = useParams();
@@ -80,6 +45,15 @@ const ArticleDetailPage = () => {
       );
     },
   });
+
+
+  const { data:postsData } = useQuery({
+    queryFn: () => getAllPosts(),
+    queryKey: ["posts"],
+    
+  });
+
+
   return (
     <MainLayout>
       {isLoading ? (
@@ -124,7 +98,7 @@ const ArticleDetailPage = () => {
             <SuggestedPosts
               header="Latest Article"
               posts={postsData}
-              tags={tagsData}
+              tags={data?.tags}
               className="mt-8 lg:mt-0 max-w-xs"
             />
             <div className="mt-7">
@@ -133,8 +107,8 @@ const ArticleDetailPage = () => {
               </h2>
 
               <SocialShareButtons
-                url={encodeURI("https://manuarora.in/boxshadows")}
-                title={encodeURIComponent("Box Shadows for TailwindCSS")}
+                url={encodeURI(window.location.href)}
+                title={encodeURIComponent(data?.title)}
               />
             </div>
           </div>
